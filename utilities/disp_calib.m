@@ -1,6 +1,6 @@
 
 % Plot camera calibration results (in camera coordinate system).
-figure(4); clf; %set(gcf,'Renderer','OpenGL');
+figure(4); clf;
 for i = 1:length(fc_cam)
    IP   = 5*dX_cam{i}*[1 -alpha_c_cam{i} 0; 0 1 0;0 0 1]*...
       [1/fc_cam{i}(1) 0 0; 0 1/fc_cam{i}(2) 0; 0 0 1]*...

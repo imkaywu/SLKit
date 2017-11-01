@@ -1,1 +1,1 @@
-# structured_light toolkit
+# Structured Light Toolkit
