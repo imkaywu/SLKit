@@ -1,3 +1,5 @@
-.asv
-/data/man
-/calib/calib_cam_proj_man.mat
+*.asv
+*.jpg
+*.bmp
+calib/calib_cam_proj_beethovan.mat
+calib/calib_cam_proj_man.mat
