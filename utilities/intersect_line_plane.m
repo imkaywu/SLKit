@@ -1,7 +1,7 @@
-function [p,t] = intersectLineWithPlane(q,v,w)
+function [p,t] = intersect_line_plane(q,v,w)
 
-% INTERSECTLINES Find intersection of a line with a plane.
-%    [P,T] = INTERSECTLINEWITHPLANE(Q,V,W) finds the point of intersection
+% intersect_line_plane Find intersection of a line with a plane.
+%    [P,T] = intersect_line_plane(Q,V,W) finds the point of intersection
 %    of a line in parametric form (i.e., containing a point Q and spanned
 %    by the vector V) with a plane W defined in implicit form. Note,
 %    this function does not handle "pathological" cases, since they
