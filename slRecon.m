@@ -36,7 +36,7 @@ plot_dsample = 100;      % down-sampling rate for Matlab point cloud display
 distReject  = Inf;      % rejection distance (for outlier removal)
 
 % Set visualization parameters
-is_vis = false;
+is_vis = true;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Part I: Decode Grey code sequence to recover illumination plane(s).
@@ -233,32 +233,28 @@ disp('+ Displaying results and exporting PLY model...');
 if (is_vis)
     disp_calib;
     for i = 1:length(Nc)
-       C = reshape(colors{i},[size(colors{i},1) 1 size(colors{i},2)]);
-       [C,cmap] = rgb2ind(C,256);
-       hold on;
-          fscatter3(vertices{i}(1:plot_dsample:end,1),...
-                    vertices{i}(1:plot_dsample:end,3),...
-                   -vertices{i}(1:plot_dsample:end,2),...
-                    double(C(1:plot_dsample:end)),cmap);
-       hold off;
-       axis tight; drawnow;
+        C = reshape(colors{i},[size(colors{i},1) 1 size(colors{i},2)]);
+        [C,cmap] = rgb2ind(C,256);
+        hold on;
+        fscatter3(vertices{i}(1:plot_dsample:end,1),...
+                  vertices{i}(1:plot_dsample:end,2),...
+                  vertices{i}(1:plot_dsample:end,3),...
+                double(C(1:plot_dsample:end)),cmap);
+        hold off;
+        axis tight; drawnow;
     end
 end
 
 % Export colored point cloud as a PLY file.
-clear idx; mergedVertices = []; mergedColors = [];
+clear idx; merged_vertices = []; merged_colors = [];
 for i = 1:length(Nc)
-   idx{i} = find(~isnan(vertices{i}(:,1)));
-   tmp = Rc_1_cam{i}' * (vertices{i}(idx{i}, :)' - repmat(Tc_1_cam{i}, 1, numel(idx{i}))); % transform to world coordinate system
-   tmp = tmp';
-   writePly([data_dir, '/', obj_name, '_', algs{aa}, '.ply'], tmp(:,[1 2 3]),colors{i}(idx{i},:));
-   mergedVertices = [mergedVertices; vertices{i}(idx{i},[1 2 3])];
-   mergedColors = [mergedColors; colors{i}(idx{i},:)];
+   idx = find(~isnan(vertices{i}(:,1)));
+   vertices_world = Rc_1_cam{i}' * (vertices{i}(idx, :)' - repmat(Tc_1_cam{i}, 1, numel(idx))); % transform to world coordinate system
+   vertices_world = vertices_world';
+   merged_vertices = [merged_vertices; vertices{i}(idx,[1 2 3])];
+   merged_colors = [merged_colors; colors{i}(idx,:)];
 end
-if length(Nc) > 1
-   vrmlPoints(['./data/',seq_type,'/',obj_name,'/merged.wrl'],...
-      mergedVertices,mergedColors);
-end
+writePly([data_dir, '/', obj_name, '_', '.ply'], merged_vertices, merged_colors);
 disp(' ');
 
 rmpath('utilities');
