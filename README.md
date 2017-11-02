@@ -15,7 +15,7 @@ You can run the `slRecon.m` to get the reconstructed result.
 
 ## Result
 ![man](doc/man.png)
-![beethovan](doc/man.png)
+![beethovan](doc/beethovan.png)
 
 ## License
 MIT
